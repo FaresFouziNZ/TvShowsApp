@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'show.dart';
@@ -23,35 +21,46 @@ class _searchingState extends State<searching> {
     String imgUrl;
     try {
       var resp = await get(Uri.parse(url));
-      Map data = jsonDecode(resp.body);
+      var data = jsonDecode(resp.body);
       imgUrl = data[0]['show']['image']['original'].toString();
       score = data[0]['show']['rating']['average'].toString();
       genre = data[0]['show']['genres'].toString();
 
       showFavList.add(
           Show(score: score, genre: genre, imageUrl: imgUrl, name: showName));
+      setState(() {});
     } catch (e) {
       print('$e');
     }
   }
 
   Widget showTemplate(show) {
-    return Card(
-      margin: EdgeInsets.fromLTRB(16.0, 0, 16.0, 0),
-      child: Row(
-        children: [
-          Column(
-            children: [
-              Text(
-                '',
-                style: TextStyle(),
-              ),
-              SizedBox(height: 5.0),
-              Text('')
-            ],
-          ),
-          Text('')
-        ],
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Card(
+        margin: EdgeInsets.fromLTRB(16.0, 0, 16.0, 0),
+        child: Row(
+          children: [
+            CircleAvatar(
+              backgroundImage: NetworkImage(show.imageUrl),
+            ),
+            Column(
+              children: [
+                Text(
+                  show.name,
+                  style: TextStyle(),
+                ),
+                SizedBox(height: 5.0),
+                Text(
+                  show.genre,
+                  style: TextStyle(),
+                )
+              ],
+            ),
+            SizedBox(width: 225.0),
+            Text(show.score)
+          ],
+        ),
       ),
     );
   }
