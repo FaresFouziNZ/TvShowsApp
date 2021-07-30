@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
@@ -24,11 +26,24 @@ class _WelcomeState extends State<Welcome> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[300],
-      body: Center(
-          child: SpinKitRing(
-        color: Colors.red[800],
-        size: 350.0,
-      )),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SpinKitRing(
+            color: Colors.red[800],
+            size: 250.0,
+          ),
+          SizedBox(
+            height: 50,
+          ),
+          Text(
+            'Welcome',
+            style: TextStyle(
+              fontSize: 50,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
