@@ -24,6 +24,12 @@ class _searchingState extends State<searching> {
     try {
       var resp = await get(Uri.parse(url));
       Map data = jsonDecode(resp.body);
+      imgUrl = data[0]['show']['image']['original'].toString();
+      score = data[0]['show']['rating']['average'].toString();
+      genre = data[0]['show']['genres'].toString();
+
+      showFavList.add(
+          Show(score: score, genre: genre, imageUrl: imgUrl, name: showName));
     } catch (e) {
       print('$e');
     }
@@ -35,7 +41,14 @@ class _searchingState extends State<searching> {
       child: Row(
         children: [
           Column(
-            children: [Text(''), SizedBox(height: 5.0), Text('')],
+            children: [
+              Text(
+                '',
+                style: TextStyle(),
+              ),
+              SizedBox(height: 5.0),
+              Text('')
+            ],
           ),
           Text('')
         ],
@@ -48,7 +61,10 @@ class _searchingState extends State<searching> {
     return Scaffold(
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
-          onPressed: () {},
+          onPressed: () {
+            loadData();
+            _controller.clear();
+          },
         ),
         backgroundColor: Colors.grey[350],
         appBar: AppBar(
